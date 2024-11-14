@@ -1,5 +1,7 @@
 package com.mapper;
 
+import java.util.List;
+
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -16,4 +18,7 @@ public interface DiaryMapper {
     
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public void updateDiaryFromEntity(Diary entity,@MappingTarget DiaryDTO dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public void updateDiaryFromEntity(List<Diary> entities, @MappingTarget List<DiaryDTO> dtos);
 }

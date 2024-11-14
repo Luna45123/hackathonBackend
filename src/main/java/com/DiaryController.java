@@ -35,7 +35,10 @@ public class DiaryController {
 
     @GetMapping("/all")
     public ResponseEntity<Collection<DiaryDTO>> getAllDiary(){
-       return null;
+        List<Diary> diaries = diaryRepository.findAll();
+        List<DiaryDTO> diaryDTOs = new ArrayList<DiaryDTO>();
+        diaryMapper.updateDiaryFromEntity(diaries, diaryDTOs);
+        return new ResponseEntity<Collection<DiaryDTO>>(diaryDTOs,HttpStatus.OK);
     }
 
 }
