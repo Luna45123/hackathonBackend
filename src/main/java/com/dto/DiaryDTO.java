@@ -1,8 +1,10 @@
 package com.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 public class DiaryDTO {
     
@@ -18,8 +20,9 @@ public class DiaryDTO {
 
     private long userId;
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate time;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime time;
 
     
 
@@ -47,11 +50,12 @@ public class DiaryDTO {
         this.mood = mood;
     }
 
-    public LocalDate getTime() {
+    
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

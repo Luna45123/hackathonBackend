@@ -1,10 +1,9 @@
 package com.domain;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -54,8 +53,7 @@ public class Diary {
     public void setMood(String mood) {
         this.mood = mood;
     }
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+
     public LocalDateTime getTime() {
         return time;
     }
