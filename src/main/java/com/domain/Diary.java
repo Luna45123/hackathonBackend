@@ -1,6 +1,8 @@
 package com.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.Entity;
@@ -10,9 +12,11 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Diary {
-
+    public Diary() {
+        this.time = LocalDateTime.now(); // Sets the current date and time on object creation
+    }
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
     private String title;
@@ -21,7 +25,11 @@ public class Diary {
 
     private String mood;
 
-    private LocalDate time;
+    private String moodZone;
+
+    private LocalDateTime time;
+
+    private long userId;
 
     public String getTitle() {
         return title;
@@ -48,11 +56,11 @@ public class Diary {
     }
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
@@ -62,6 +70,22 @@ public class Diary {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getMoodZone() {
+        return moodZone;
+    }
+
+    public void setMoodZone(String moodZone) {
+        this.moodZone = moodZone;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     

@@ -40,5 +40,7 @@ public class DiaryController {
         diaryMapper.updateDiaryFromEntity(diaries, diaryDTOs);
         return new ResponseEntity<Collection<DiaryDTO>>(diaryDTOs,HttpStatus.OK);
     }
+    // GetMapping("/diary/{id}")
+    // public ResponseEntity
 
 }

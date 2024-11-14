@@ -13,6 +13,10 @@ public class DiaryDTO {
     private String text;
 
     private String mood;
+
+    private String moodZone;
+
+    private long userId;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate time;
@@ -57,6 +61,22 @@ public class DiaryDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getMoodZone() {
+        return moodZone;
+    }
+
+    public void setMoodZone(String moodZone) {
+        this.moodZone = moodZone;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     
