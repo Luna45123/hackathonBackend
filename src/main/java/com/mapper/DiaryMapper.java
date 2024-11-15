@@ -10,15 +10,27 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.domain.Diary;
 import com.dto.DiaryDTO;
 
-@Mapper(componentModel="spring")
+@Mapper(componentModel = "spring")
 public interface DiaryMapper {
-// map from DTO to Entity
+    // Map single Diary to DiaryDTO
+    DiaryDTO toDiaryDTO(Diary diary);
+
+    // Map single DiaryDTO to Diary
+    Diary toDiary(DiaryDTO dto);
+
+    // map from DTO to Entity
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public void updateDiaryFromDto(DiaryDTO dto, @MappingTarget Diary entity);
-    
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public void updateDiaryFromEntity(Diary entity,@MappingTarget DiaryDTO dto);
+    public void updateDiaryFromEntity(Diary entity, @MappingTarget DiaryDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public void updateDiaryFromEntity(List<Diary> entities, @MappingTarget List<DiaryDTO> dtos);
+
+    // Map list of Diary entities to list of DiaryDTOs
+    List<DiaryDTO> toDiaryDTOList(List<Diary> entities);
+
+    // Map list of DiaryDTOs to list of Diary entities
+    List<Diary> toDiaryList(List<DiaryDTO> dtos);
 }
