@@ -3,13 +3,14 @@ package com.domain;
 
 import java.time.LocalDateTime;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "diary")
 public class Diary {
     public Diary() {
         this.time = LocalDateTime.now(); // Sets the current date and time on object creation

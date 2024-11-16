@@ -1,5 +1,6 @@
 package com.mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.mapstruct.BeanMapping;
@@ -27,6 +28,9 @@ public interface DiaryMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public void updateDiaryFromEntity(List<Diary> entities, @MappingTarget List<DiaryDTO> dtos);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public void updateDiaryFromEntity(Collection<Diary> diaries, @MappingTarget List<DiaryDTO> diaryDTOs);
 
     // Map list of Diary entities to list of DiaryDTOs
     List<DiaryDTO> toDiaryDTOList(List<Diary> entities);
