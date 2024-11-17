@@ -29,42 +29,43 @@ public class DashboardController {
     private DiaryMapper diaryMapper;
 
     @GetMapping("/dashboard")
-    public ResponseEntity<DashboardDTO> getDashboardData() {
-        DashboardDTO dashboardDTO = new DashboardDTO();
+public ResponseEntity<DashboardDTO> getDashboardData() {
+    DashboardDTO dashboardDTO = new DashboardDTO();
 
-        // Retrieve all diaries and map to DTOs using the mapper
-        List<DiaryDTO> diaryDTOs = diaryMapper.toDiaryDTOList(diaryRepository.findAll());
+    // Retrieve all diaries and map to DTOs using the mapper
+    List<DiaryDTO> diaryDTOs = diaryMapper.toDiaryDTOList(diaryRepository.findAll());
 
-        // Initialize moodZoneCounts map
-        Map<String, Map<String, Integer>> moodZoneCounts = new HashMap<>();
+    // Initialize moodZoneCounts map
+    Map<String, Map<String, Integer>> moodZoneCounts = new HashMap<>();
 
-        // Initialize time-based mood zone counts, using TreeMap to keep timestamps in order
-        Map<String, Map<String, Integer>> timeBasedMoodZoneCounts = new TreeMap<>();
+    // Initialize monthly mood zone counts, using TreeMap to keep months in order
+    Map<String, Map<String, Integer>> monthlyMoodZoneCounts = new TreeMap<>();
 
-        // Iterate over each diary entry and populate moodZoneCounts and time-based counts
-        for (DiaryDTO diary : diaryDTOs) {
-            String moodZone = diary.getMoodZone();
-            String mood = diary.getMood();
-            String timestamp = diary.getTime().toLocalDate().toString(); // Convert time to date-only String for daily aggregation
+    // Iterate over each diary entry and populate moodZoneCounts and monthly counts
+    for (DiaryDTO diary : diaryDTOs) {
+        String moodZone = diary.getMoodZone();
+        String mood = diary.getMood();
+        String month = diary.getTime().getYear() + "-" + String.format("%02d", diary.getTime().getMonthValue()); // Format: YYYY-MM
 
-            // Initialize the mood map for the moodZone if absent
-            moodZoneCounts.putIfAbsent(moodZone, new HashMap<>());
-            timeBasedMoodZoneCounts.putIfAbsent(timestamp, new HashMap<>());
+        // Initialize the mood map for the moodZone if absent
+        moodZoneCounts.putIfAbsent(moodZone, new HashMap<>());
+        monthlyMoodZoneCounts.putIfAbsent(month, new HashMap<>());
 
-            // Increment the mood count for the specific moodZone and mood
-            Map<String, Integer> moodCounts = moodZoneCounts.get(moodZone);
-            moodCounts.put(mood, moodCounts.getOrDefault(mood, 0) + 1);
+        // Increment the mood count for the specific moodZone and mood
+        Map<String, Integer> moodCounts = moodZoneCounts.get(moodZone);
+        moodCounts.put(mood, moodCounts.getOrDefault(mood, 0) + 1);
 
-            // Increment the count in time-based data for each mood zone per date
-            Map<String, Integer> timeMoodCounts = timeBasedMoodZoneCounts.get(timestamp);
-            timeMoodCounts.put(moodZone, timeMoodCounts.getOrDefault(moodZone, 0) + 1);
-        }
-
-        // Set counts and diaries in the dashboard DTO
-        dashboardDTO.setMoodZoneCounts(moodZoneCounts);
-        dashboardDTO.setTimeBasedMoodZoneCounts(timeBasedMoodZoneCounts); // New field for time-based data
-        dashboardDTO.setDiaries(diaryDTOs);
-
-        return new ResponseEntity<>(dashboardDTO, HttpStatus.OK);
+        // Increment the count in monthly data for each mood zone
+        Map<String, Integer> monthlyCounts = monthlyMoodZoneCounts.get(month);
+        monthlyCounts.put(moodZone, monthlyCounts.getOrDefault(moodZone, 0) + 1);
     }
+
+    // Set counts and diaries in the dashboard DTO
+    dashboardDTO.setMoodZoneCounts(moodZoneCounts);
+    dashboardDTO.setTimeBasedMoodZoneCounts(monthlyMoodZoneCounts); // New field for monthly data
+    dashboardDTO.setDiaries(diaryDTOs);
+
+    return new ResponseEntity<>(dashboardDTO, HttpStatus.OK);
+}
+
 }
