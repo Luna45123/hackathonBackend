@@ -9,8 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.domain.History;
 
 public interface HistoryService {
-    History addHistory(String description, MultipartFile imageFile) throws IOException;
+    History addHistory(String description, MultipartFile imageFile, String email) throws IOException;
     List<History> getAllHistory();
     Optional<History> getHistoryById(Long id); 
-    List<History> getAllHistories(); 
+    List<History> getAllHistories();
 }

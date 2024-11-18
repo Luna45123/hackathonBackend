@@ -1,6 +1,5 @@
 package com.domain;
 
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -15,26 +14,25 @@ public class Diary {
     public Diary() {
         this.time = LocalDateTime.now(); // Sets the current date and time on object creation
     }
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String title;
-
     private String text;
-
     private String mood;
-
     private String moodZone;
-
     private LocalDateTime time;
-
     private long userId;
+
+    // Add email field for querying
+    private String userEmail; // Store user email here
 
     public String getTitle() {
         return title;
     }
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -87,5 +85,11 @@ public class Diary {
         this.userId = userId;
     }
 
-    
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 }
