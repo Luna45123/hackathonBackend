@@ -6,10 +6,9 @@ import java.util.Map;
 public class DashboardDTO {
 
     private Map<String, Map<String, Integer>> moodZoneCounts;
-    private Map<String, Map<String, Integer>> timeBasedMoodZoneCounts; // New field for time series data
+    private Map<String, Map<String, Integer>> timeBasedMoodZoneCounts;
     private List<DiaryDTO> diaries;
 
-    // Getters and Setters
     public Map<String, Map<String, Integer>> getMoodZoneCounts() {
         return moodZoneCounts;
     }
