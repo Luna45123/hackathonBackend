@@ -87,13 +87,17 @@ public class UserController {
         }
     }
 
+    // UserController.java
     @PutMapping("/updateMembership")
     public ResponseEntity<String> updateMembership(@RequestParam String email) {
         Optional<User> userOptional = userRepo.findByEmail(email);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setMembership(1); // Update Membership to 1
+            if (user.getMembership() > 0) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("User already has a membership");
+            }
+            user.setMembership(1); // Set membership to 1
             userRepo.save(user);
             return ResponseEntity.ok("Membership updated successfully!");
         } else {
@@ -107,7 +111,7 @@ public class UserController {
         if (userOptional.isPresent()) {
             return ResponseEntity.ok(userOptional.get().getMembership());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0); // ถ้าไม่พบผู้ใช้ ให้ส่งค่า 0
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0); // If user not found, return 0
         }
     }
 
