@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +21,8 @@ public class Diary {
     private long id;
 
     private String title;
+
+    @Lob
     private String text;
     private String mood;
     private String moodZone;
