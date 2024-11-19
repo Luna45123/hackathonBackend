@@ -91,4 +91,18 @@ public class DiaryController {
         return new ResponseEntity<String>("diary deleted", HttpStatus.OK);
     }
 
+    // Get Diaries by User Email
+    @GetMapping("/diary/user/email/{email}")
+    public ResponseEntity<Collection<DiaryDTO>> getDiariesByUserEmail(@PathVariable String email) {
+        List<Diary> diaries = diaryRepository.findByUserEmail(email);
+        if (diaries.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<DiaryDTO> diaryDTOs = new ArrayList<>();
+        diaryMapper.updateDiaryFromEntity(diaries, diaryDTOs);
+
+        return new ResponseEntity<>(diaryDTOs, HttpStatus.OK);
+    }
+
 }
