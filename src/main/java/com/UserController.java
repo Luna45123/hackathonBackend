@@ -100,4 +100,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
+
+    @GetMapping("/membership")
+    public ResponseEntity<Integer> getMembershipByEmail(@RequestParam String email) {
+        Optional<User> userOptional = userRepo.findByEmail(email);
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(userOptional.get().getMembership());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0); // ถ้าไม่พบผู้ใช้ ให้ส่งค่า 0
+        }
+    }
+
 }
