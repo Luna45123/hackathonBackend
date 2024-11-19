@@ -1,6 +1,8 @@
 package com;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import com.domain.History;
 import com.repository.HistoryRepository;
 
 import java.util.*;
+
 @RestController
 @RequestMapping("/api/history")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -69,15 +72,27 @@ public class HistoryController {
     @GetMapping
     public ResponseEntity<List<History>> getHistoryByEmail(@RequestParam String email) {
         if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().build(); 
+            return ResponseEntity.badRequest().build();
         }
 
         // ดึงข้อมูลจากฐานข้อมูลโดยใช้ email
         List<History> historyList = historyRepository.findByEmail(email);
         if (historyList.isEmpty()) {
-            return ResponseEntity.noContent().build(); 
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(historyList); 
+        return ResponseEntity.ok(historyList);
     }
+
+    @GetMapping("/status/{email}")
+    public ResponseEntity<Boolean> isChallengeCompletedToday(@PathVariable String email) {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1);
+
+        List<History> histories = historyRepository.findHistoryByEmailAndDate(email, startOfDay, endOfDay);
+        boolean isCompletedToday = !histories.isEmpty();
+
+        return ResponseEntity.ok(isCompletedToday);
+    }
+
 }

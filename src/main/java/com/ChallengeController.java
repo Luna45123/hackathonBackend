@@ -25,7 +25,7 @@ import com.service.ChallengeService;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChallengeController {
     @Autowired
-    private ChallengeService challengeService;    
+    private ChallengeService challengeService;
 
     @PostMapping(path = "/save")
     public String saveChallenge(@RequestBody ChallengeDTO challengeDTO) {
@@ -51,32 +51,33 @@ public class ChallengeController {
 
     @GetMapping(path = "/all")
     public ResponseEntity<List<Challenge>> getAllChallenges() {
-    List<Challenge> challenges = challengeService.getAllChallenges();
-    if (!challenges.isEmpty()) {
-        return ResponseEntity.ok(challenges);
-    } else {
-        return ResponseEntity.noContent().build();
+        List<Challenge> challenges = challengeService.getAllChallenges();
+        if (!challenges.isEmpty()) {
+            return ResponseEntity.ok(challenges);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
-}
-
 
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<String> updateChallenge(@PathVariable int id, @RequestBody ChallengeDTO challengeDTO) {
-    boolean updated = challengeService.updateChallenge(id, challengeDTO);
-    if (updated) {
-        return ResponseEntity.ok("Challenge updated successfully");
-    } else {
-        return ResponseEntity.notFound().build();
+        boolean updated = challengeService.updateChallenge(id, challengeDTO);
+        if (updated) {
+            return ResponseEntity.ok("Challenge updated successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
     @PatchMapping(path = "/update/{id}")
-    public ResponseEntity<String> partialUpdateChallenge(@PathVariable int id, @RequestBody Map<String, Object> updates) {
-    boolean updated = challengeService.partialUpdateChallenge(id, updates);
-    if (updated) {
-        return ResponseEntity.ok("Challenge updated successfully");
-    } else {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<String> partialUpdateChallenge(@PathVariable int id,
+            @RequestBody Map<String, Object> updates) {
+        boolean updated = challengeService.partialUpdateChallenge(id, updates);
+        if (updated) {
+            return ResponseEntity.ok("Challenge updated successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
-}
 }
