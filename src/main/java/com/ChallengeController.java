@@ -22,7 +22,7 @@ import com.service.ChallengeService;
 
 @RestController
 @RequestMapping("api/challenge")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ChallengeController {
     @Autowired
     private ChallengeService challengeService;

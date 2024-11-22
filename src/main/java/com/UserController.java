@@ -17,20 +17,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.domain.Customer;
 import com.domain.User;
 import com.dto.LoginDTO;
 import com.dto.UserDTO;
+import com.mapper.UserMapper;
 import com.repository.UserRepository;
 import com.service.UserService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("api/user")
 public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping(path = "/save")
     public String saveUser(@RequestBody UserDTO userDTO) {
@@ -65,6 +70,11 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
+    @GetMapping(path = "/email/{email}")
+    public ResponseEntity<List<User>> getAllUsersByEmail(@PathVariable String email) {
+        List<User> users = userRepo.findUserByEmail(email);
+        return ResponseEntity.ok(users);
+    }
 
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<String> updateUser(@PathVariable int id, @RequestBody UserDTO userDTO) {
@@ -85,6 +95,25 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @PatchMapping(path = "/update/email/{email}")
+    public ResponseEntity<String> partialUpdateUser(@PathVariable String email, @RequestBody UserDTO userDto) {
+        Optional<User> customerEnt = userRepo.findByEmail(email);
+        if (customerEnt.isEmpty()) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        
+        User user = customerEnt.get();
+        userDto.setId(user.getId()); // Ensure the id is not altered
+        
+        // Manually handle membership if it's not in the DTO
+        if (userDto.getMembership() == 0) {
+            userDto.setMembership(user.getMembership());
+        }
+        
+        userMapper.updateUserFromDto(userDto, user);
+        userRepo.save(user);
+        return new ResponseEntity<>("patch", HttpStatus.OK);
     }
 
     // UserController.java

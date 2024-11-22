@@ -6,13 +6,14 @@ public class UserDTO {
     private String email;
     private String password;
     private int membership;
-    
-    public UserDTO(int id, String ename, String email, String password, int membership) {
+    private int canWrite;
+    public UserDTO(int id, String ename, String email, String password, int membership, int canWrite) {
         this.id = id;
         this.ename = ename;
         this.email = email;
         this.password = password;
         this.membership = membership;
+        this.canWrite = canWrite;
     }
 
     public int getId() {
@@ -54,11 +55,20 @@ public class UserDTO {
     public void setMembership(int membership) {
         this.membership = membership;
     }
+    
 
     @Override
     public String toString() {
         return "UserDTO [id=" + id + ", ename=" + ename + ", email=" + email + ", password=" + password
                 + ", membership=" + membership + "]";
+    }
+
+    public int getCanWrite() {
+        return canWrite;
+    }
+
+    public void setCanWrite(int canWrite) {
+        this.canWrite = canWrite;
     }
 
 }

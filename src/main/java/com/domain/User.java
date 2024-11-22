@@ -29,6 +29,9 @@ public class User {
 
     @Column(name="membership", length = 45)
     private int membership = 0; // Default to 0
+    
+    @Column(name = "can_write", length = 45)
+    private int canWrite = 1; // Default value is 0
 
     public User() {
         this.membership = 0;
@@ -86,6 +89,14 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", membership="
                 + membership + "]";
+    }
+
+    public int getCanWrite() {
+        return canWrite;
+    }
+
+    public void setCanWrite(int canWrite) {
+        this.canWrite = canWrite;
     }
 
 }

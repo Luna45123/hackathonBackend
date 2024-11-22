@@ -49,7 +49,8 @@ public class UserServiceImpl implements UserService {
                 foundUser.getName(),
                 foundUser.getEmail(),
                 foundUser.getPassword(),
-                foundUser.getMembership()
+                foundUser.getMembership(),
+                foundUser.getCanWrite()
             );
             
             // Returning a successful LoginResponse with a user-specific message

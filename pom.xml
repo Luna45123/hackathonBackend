@@ -31,9 +31,9 @@
 	</properties>
 	<dependencies>
 		<dependency>
-    		<groupId>mysql</groupId>
-    		<artifactId>mysql-connector-java</artifactId>
-    		<version>8.0.30</version> <!-- Make sure this is the latest version -->
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>  <!-- Make sure this is up to date -->
 		</dependency>
 
 		<dependency>

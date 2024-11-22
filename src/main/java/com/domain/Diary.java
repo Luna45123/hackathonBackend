@@ -2,6 +2,7 @@ package com.domain;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,10 @@ public class Diary {
     @Lob
     private String text;
     private String mood;
+
+    @Column(name="mood_zone", length = 500)
     private String moodZone;
+    
     private LocalDateTime time;
     private long userId;
 

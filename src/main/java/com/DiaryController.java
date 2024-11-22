@@ -24,7 +24,7 @@ import com.mapper.DiaryMapper;
 import com.repository.DiaryRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class DiaryController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class DiaryController {
     @Autowired
     DiaryMapper diaryMapper;
 
-    @PostMapping("/addDiary")
+    @PostMapping(value = "/addDiary", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
     public ResponseEntity<String> createDiary(@RequestBody DiaryDTO diaryDTO) {
         Diary newDiary = new Diary();
         diaryMapper.updateDiaryFromDto(diaryDTO, newDiary);

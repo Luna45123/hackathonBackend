@@ -19,6 +19,9 @@ public class DiaryDTO {
     private String moodZone;
 
     private long userId;
+
+    private String userEmail; 
+    
     
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -81,6 +84,14 @@ public class DiaryDTO {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     
